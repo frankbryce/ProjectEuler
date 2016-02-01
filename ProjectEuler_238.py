@@ -1,4 +1,5 @@
 from itertools import tee
+from pdb import set_trace
 
 def getNextNumber(n):
   return (n*n) % 20300713
@@ -23,7 +24,6 @@ def getDigitGetters():
   
 def getDigits():
   s0 = s = "14025256"
-  it = None
   while True:
     for ch in s:
       yield int(ch)
@@ -41,6 +41,7 @@ def calculateSumOfPksUpTo(n):
         sum += d
         if sum > n: break
         if sum == min_k+1:
+          set_trace()
           num_found += 1
           p_k.add(sum)
           while min_k+1 in p_k:
@@ -70,6 +71,7 @@ def calculateSumOfPksUpTo(n):
         sum += d
         if sum > n: break
         if sum > min_k and sum not in p_k:
+          set_trace()
           num_found += 1
           p_k.add(sum)
           if sum > max_k:
