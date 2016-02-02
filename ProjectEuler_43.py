@@ -1,18 +1,10 @@
-def _strWithoutIdx(s,idx):
-  if idx==0:
-    return s[1:]
-  elif idx==len(s)-1:
-    return s[:-1]
-  else:
-    return s[0:idx]+s[idx+1:len(s)]
-
 def getAnagrams(s):
   if len(s)==1:
     yield s
   else:
-    for i in range(len(s)):
-      for strs in getAnagrams(_strWithoutIdx(s,i)):
-        yield s[i:i+1] + strs
+    for c in s:
+      for strs in getAnagrams(s.replace(c,"")):
+        yield c + strs
 
 def getStringsMatchingMagicalProperty():
   for s in getAnagrams("0123456789"):
