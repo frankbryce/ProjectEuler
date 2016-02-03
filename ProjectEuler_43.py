@@ -18,4 +18,7 @@ def getStringsMatchingMagicalProperty():
     yield s
 
 if __name__=="__main__":
-  print(list(getStringsMatchingMagicalProperty()))
+  sum = 0
+  for n in getStringsMatchingMagicalProperty():
+    sum += int(n)
+  print(sum)
