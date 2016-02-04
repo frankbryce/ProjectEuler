@@ -1,27 +1,7 @@
 from sys import argv
-from math import sqrt
-from pdb import set_trace
-import functools
+import primeUtil
+import pdb
 
-@functools.lru_cache(maxsize=4096)
-def isPrime(n):
-  for i in getPrimesUpTo(int(sqrt(n))):
-    if n%i==0: return False
-  return True
-
-def odds(endingAt, startingAt=3):
-  i=startingAt
-  while i<=endingAt:
-    yield i
-    i+=2
-  
-def getPrimesUpTo(n):
-  if n<2: return
-  yield 2
-  for i in odds(n):
-    if i>n: break;
-    if isPrime(i): yield i
-    
 # primeSums[sum] = the number of subsets of the
 # nums list that add up to sum
 def getPrimeSums(nums):
@@ -35,12 +15,14 @@ def getPrimeSums(nums):
   return primeSums
   
 def getCountOfSumsOfPrimeSubsets(upTo):
-  primes = getPrimesUpTo(upTo)
+  primes = primeUtil.getPrimesUpTo(upTo)
   primeSums = getPrimeSums(primes)
   count=0
   for sum in primeSums:
-    if isPrime(sum):
+    if primeUtil.isPrime(sum):
+      pdb.set_trace()
       count += primeSums[sum]
+  print(primeSums)
   return count
 
 if __name__=="__main__":

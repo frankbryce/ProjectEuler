@@ -1,4 +1,4 @@
-from ProjectEuler_249 import getPrimesUpTo
+from primeUtil import getPrimesUpTo
 import pytest
 
 @pytest.mark.parametrize("n",[(1000,168)])
