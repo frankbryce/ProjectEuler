@@ -7,17 +7,28 @@ def iterThrough(lists):
       for val in iterThrough(l):
         yield val
 
-def dictIter(d,startAt=0):
+
+def dictIterDecorator(dIter):
+  dIterCache = {}
+  def dictIterCache(d):
+    cIdx = tuple(list(d.keys())+list(d.values()))
+    if cIdx not in dIterCache:
+      dIterCache[cIdx] = list(dIter(d))
+    return dIterCache[cIdx]
+  return dictIterCache
+
+@dictIterDecorator
+def dictIter(d):
   keys = list(d.keys())
   if len(keys)==1:
     n = d[keys[0]]
-    for i in range(startAt, n+1):
+    for i in range(n+1):
       d[keys[0]]=i
       yield d
   else:
     d2 = d.copy()
     del d2[keys[0]]
-    for d2s in dictIter(d2, 0):
+    for d2s in dictIter(d2):
       for i in range(d[keys[0]]+1):
         d2s[keys[0]] = i
         yield d2s
