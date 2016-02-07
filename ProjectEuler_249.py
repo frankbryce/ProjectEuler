@@ -1,6 +1,5 @@
 from sys import argv
 import primeUtil
-import pdb
 
 # primeSums[sum] = the number of subsets of the
 # nums list that add up to sum
@@ -20,7 +19,6 @@ def getCountOfSumsOfPrimeSubsets(upTo):
   count=0
   for sum in primeSums:
     if primeUtil.isPrime(sum):
-      pdb.set_trace()
       count += primeSums[sum]
   print(primeSums)
   return count

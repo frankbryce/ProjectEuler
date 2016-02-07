@@ -14,10 +14,10 @@ def odds(endingAt, startingAt=3):
     yield i
     i+=2
   
-def getPrimesUpTo(n):
-  if n<2: return
-  yield 2
-  for i in odds(n):
+def getPrimesUpTo(n, startingAt=2):
+  if n<startingAt: return
+  if startingAt==2: yield 2
+  for i in odds(n, max(3,startingAt)):
     if i>n: break;
     if isPrime(i): yield i
     
