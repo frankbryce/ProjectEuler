@@ -1,15 +1,33 @@
-from iterUtil import dictIter
+from iterUtil import tupleRange
+from iterUtil import tupleDiff
+from iterUtil import maxValuesInTuples
 from functools import reduce
 import pytest
 
-@pytest.mark.parametrize("d",[{2:2,3:3,5:5}, {2:5,3:2,5:3},{2:5,3:7,5:9}, {2:5,3:2,5:0}])
-def test_dictIter(d):
-  assert len(list(dictIter(d))) == reduce(lambda x, y: x * (y+1), list(d.values()), 1)
+@pytest.mark.parametrize("t",[(2,3,5),(5,2,3),(5,7,9),(5,2,0)])
+def test_tupleRange(t):
+  assert len(list(tupleRange(t))) == reduce(lambda x, y: x * (y+1), t, 1)
+  
+@pytest.mark.parametrize("t",[(2,3,5),(5,2,3),(5,7,9),(5,2,0)])
+def test_tupleRangeStartAtSame(t):
+  assert len(list(tupleRange(t,t))) == 1
+  
+@pytest.mark.parametrize("t",[[(2,3,5),(1,1,1)],[(11,13,15),(1,1,1)]])
+def test_tupleRangeStartAt(t):
+  assert len(list(tupleRange(t[0],t[1]))) == reduce(lambda x, y: x * y, t[0], 1)
+  
+@pytest.mark.parametrize("t",[[(2,3,5),(5,2,3),(5,7,9),(5,2,0)]])
+def test_maxValueInTuples(t):
+  assert maxValuesInTuples(t) == (5,7,9)
 
-def getDictList(d):
-  for item in dictIter(d):
+def getTupleRange(t):
+  for item in tupleRange(t):
     pass
   
-@pytest.mark.parametrize("d",[{2:2,3:3,5:4,7:5,11:6,13:7},{2:2,3:3,5:4,7:5,11:6,13:7,17:8},{2:2,3:3,5:4,7:5,11:6,13:7,17:8,19:9},{2:2,3:3,5:4,7:5,11:6,13:7,17:8,19:9,23:10}])
-def test_dictIterSpeed(benchmark, d):
-  benchmark(getDictList, d)
+@pytest.mark.parametrize("t",[(1,2,3,4,5,6)])
+def test_tupleRangeSpeed(benchmark, t):
+  benchmark(getTupleRange, t)
+  
+def test_tupleDiff():
+  assert tupleDiff((3,2,1),(2,1,0))==(1,1,1)
+  assert tupleDiff((10,14,12,7,5,3),(8,4,6,5,1,3))==(2,10,6,2,4,0)

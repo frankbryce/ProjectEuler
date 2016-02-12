@@ -1,3 +1,6 @@
+import functools
+from random import shuffle
+
 def iterThrough(lists):
   if not hasattr(lists[0], '__iter__'):
     for val in lists:
@@ -7,31 +10,34 @@ def iterThrough(lists):
       for val in iterThrough(l):
         yield val
 
+def tupleDiff(t1, t2):
+  return tuple(x-y for x,y in zip(t1,t2))
 
-def dictIterDecorator(dIter):
-  dIterCache = {}
-  def dictIterCache(d):
-    cIdx = tuple(list(d.keys())+list(d.values()))
-    if cIdx not in dIterCache:
-      dIterCache[cIdx] = list(dIter(d))
-    return dIterCache[cIdx]
-  return dictIterCache
+def maxValuesInTuples(l):
+  ret = [0]*len(l[0])
+  for tup in l:
+    for idx in range(len(tup)):
+      ret[idx] = max(tup[idx],ret[idx])
+  return tuple(ret)
 
-@dictIterDecorator
-def dictIter(d):
-  keys = list(d.keys())
-  if len(keys)==1:
-    n = d[keys[0]]
-    for i in range(n+1):
-      d[keys[0]]=i
-      yield d
+def tupleRange(l, startAt=None):
+  if len(l)==1:
+    if startAt==None:
+      rg = range(l[0]+1)
+    else:
+      rg = range(startAt[0],l[0]+1)
+    for i in rg:
+      yield tuple([i])+l[1:]
   else:
-    d2 = d.copy()
-    del d2[keys[0]]
-    for d2s in dictIter(d2):
-      for i in range(d[keys[0]]+1):
-        d2s[keys[0]] = i
-        yield d2s
+    if startAt==None:
+      rg = range(l[0]+1)
+    else:
+      rg = range(startAt[0],l[0]+1)
+      startAt = startAt[1:]
+    l = l[1:]
+    for l2 in tupleRange(l, startAt):
+      for i in rg:
+        yield tuple([i])+l2
 
 if __name__ == '__main__':
   for val in iterThrough(
@@ -39,5 +45,5 @@ if __name__ == '__main__':
      [[211,212,213],[221,222,223],[231,232,233]],
      [[311,312,313],[321,322,323],[331,332,333]]]):
     print(val)
-  for d in dictIter({2:5,3:4,4:3}):
+  for d in tupleRange((7,6,5,4,3)):
     print(d)
