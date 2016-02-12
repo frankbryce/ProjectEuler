@@ -8,14 +8,6 @@ import pytest
 def test_tupleRange(t):
   assert len(list(tupleRange(t))) == reduce(lambda x, y: x * (y+1), t, 1)
   
-@pytest.mark.parametrize("t",[(2,3,5),(5,2,3),(5,7,9),(5,2,0)])
-def test_tupleRangeStartAtSame(t):
-  assert len(list(tupleRange(t,t))) == 1
-  
-@pytest.mark.parametrize("t",[[(2,3,5),(1,1,1)],[(11,13,15),(1,1,1)]])
-def test_tupleRangeStartAt(t):
-  assert len(list(tupleRange(t[0],t[1]))) == reduce(lambda x, y: x * y, t[0], 1)
-  
 @pytest.mark.parametrize("t",[[(2,3,5),(5,2,3),(5,7,9),(5,2,0)]])
 def test_maxValueInTuples(t):
   assert maxValuesInTuples(t) == (5,7,9)

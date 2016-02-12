@@ -20,22 +20,14 @@ def maxValuesInTuples(l):
       ret[idx] = max(tup[idx],ret[idx])
   return tuple(ret)
 
-def tupleRange(l, startAt=None):
+def tupleRange(l):
   if len(l)==1:
-    if startAt==None:
-      rg = range(l[0]+1)
-    else:
-      rg = range(startAt[0],l[0]+1)
-    for i in rg:
+    for i in range(l[0]+1):
       yield tuple([i])+l[1:]
   else:
-    if startAt==None:
-      rg = range(l[0]+1)
-    else:
-      rg = range(startAt[0],l[0]+1)
-      startAt = startAt[1:]
+    rg = range(l[0]+1)
     l = l[1:]
-    for l2 in tupleRange(l, startAt):
+    for l2 in tupleRange(l):
       for i in rg:
         yield tuple([i])+l2
 
