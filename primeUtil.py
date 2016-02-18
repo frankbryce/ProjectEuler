@@ -27,10 +27,10 @@ def getPrimesUpTo(n, startingAt=2):
 # gets cardinality of the prime factors of n
 @functools.lru_cache(maxsize=256)
 def factorCardByPrime(n):
-    if n==0 or n==1: return 0
+    if n==0 or n==1: return {}
     for prime in getPrimesUpTo(sqrt(n)):
         if n%prime==0:
-            card=factorCardByPrime(n/prime)
+            card=factorCardByPrime(n/prime).copy()
             if prime not in card:
                 card[prime]=1
             else:
