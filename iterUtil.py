@@ -21,9 +21,12 @@ def maxValuesInTuples(l):
   return tuple(ret)
 
 def tupleRange(l):
+  if type(l)!=tuple: raise ValueError("l must be a tuple!")
+  if len(l)==0:
+      return ()
   if len(l)==1:
     for i in range(l[0]+1):
-      yield tuple([i])+l[1:]
+      yield tuple([i])
   else:
     rg = range(l[0]+1)
     l = l[1:]
@@ -37,5 +40,3 @@ if __name__ == '__main__':
      [[211,212,213],[221,222,223],[231,232,233]],
      [[311,312,313],[321,322,323],[331,332,333]]]):
     print(val)
-  for d in tupleRange((7,6,5,4,3)):
-    print(d)
